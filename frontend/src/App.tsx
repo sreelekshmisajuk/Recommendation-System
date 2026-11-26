@@ -1,10 +1,38 @@
 import React, { useState } from 'react';
-import { NavTab, Item, Interaction, UserPreferences } from './types';
+import {
+  NavTab,
+  PublicPage,
+  AuthModalMode,
+  UserProfile,
+  Item,
+  CartItem,
+  Interaction,
+  UserPreferences
+} from './types';
 import { INITIAL_ITEMS, INITIAL_INTERACTIONS, INITIAL_PREFERENCES } from './data/mockData';
+
+// Public Experience
+import { PublicHeader } from './components/public/PublicHeader';
+import { PublicFooter } from './components/public/PublicFooter';
+import { CookieConsentBanner } from './components/public/CookieConsentBanner';
+import { HomePage } from './pages/public/HomePage';
+import { AboutPage } from './pages/public/AboutPage';
+import { PricingPage } from './pages/public/PricingPage';
+import { BlogPage } from './pages/public/BlogPage';
+import { ContactPage } from './pages/public/ContactPage';
+import { LegalPage } from './pages/public/LegalPage';
+
+// Auth & Onboarding
+import { AuthModal } from './components/auth/AuthModal';
+import { OnboardingWizard } from './components/auth/OnboardingWizard';
+
+// Member Workspace Layout & Components
 import { MainLayout } from './components/layout/MainLayout';
 import { ItemModal } from './components/common/ItemModal';
+import { CartDrawer } from './components/cart/CartDrawer';
+import { ErrorPage } from './pages/ErrorPage';
 
-// Pages
+// Member Pages
 import { Overview } from './pages/Overview';
 import { RecommendationChat } from './pages/RecommendationChat';
 import { ExploreItems } from './pages/ExploreItems';
@@ -18,12 +46,27 @@ import { ModelPerformance } from './pages/ModelPerformance';
 import { Explainability } from './pages/Explainability';
 import { EvaluationCenter } from './pages/EvaluationCenter';
 import { Settings } from './pages/Settings';
+import { Billing } from './pages/Billing';
 
 export const App: React.FC = () => {
+  // Authentication & View Mode State
+  // When isAuthenticated is false -> Render Public Enterprise Site (Homepage, Pricing, Docs, Auth)
+  // When user logs in or signs up -> Automatically redirect to the Member Dashboard!
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [authModalMode, setAuthModalMode] = useState<AuthModalMode>(null);
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(false);
+
+  // Navigation State
+  const [publicPage, setPublicPage] = useState<PublicPage>('home');
   const [activeTab, setActiveTab] = useState<NavTab>('overview');
+
+  // Application Data State
   const [items] = useState<Item[]>(INITIAL_ITEMS);
   const [savedItems, setSavedItems] = useState<Item[]>([]);
-  const [interactions, setInteractions] = useState<Interaction[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [interactions, setInteractions] = useState<Interaction[]>(INITIAL_INTERACTIONS);
   const [preferences, setPreferences] = useState<UserPreferences>(INITIAL_PREFERENCES);
   const [globalSearch, setGlobalSearch] = useState<string>('');
 
@@ -58,6 +101,20 @@ export const App: React.FC = () => {
     });
   };
 
+  // Add to cart helper
+  const handleAddToCart = (item: Item) => {
+    setCartItems((prev) => {
+      const existing = prev.find((ci) => ci.item.id === item.id);
+      if (existing) {
+        return prev.map((ci) =>
+          ci.item.id === item.id ? { ...ci, quantity: ci.quantity + 1 } : ci
+        );
+      }
+      return [...prev, { item, quantity: 1 }];
+    });
+    setIsCartOpen(true);
+  };
+
   // Open item inspection modal
   const handleSelectItem = (item: Item) => {
     setSelectedItem(item);
@@ -71,10 +128,89 @@ export const App: React.FC = () => {
     setActiveTab('similar');
   };
 
+  // Auth Success Handler -> Redirect to Member User Page!
+  const handleAuthSuccess = (loggedInUser: UserProfile) => {
+    setUser(loggedInUser);
+    setIsAuthenticated(true);
+    setActiveTab('overview'); // Direct redirect to dashboard!
+    setShowOnboarding(true); // Launch onboarding flow
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    setPublicPage('home');
+  };
+
   const isCurrentItemSaved = selectedItem
     ? savedItems.some((s) => s.id === selectedItem.id)
     : false;
 
+  // ==========================================
+  // SCENARIO 1: PUBLIC PAGES (BEFORE LOGIN)
+  // ==========================================
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+        <PublicHeader
+          currentPage={publicPage}
+          onNavigate={setPublicPage}
+          onOpenAuth={(mode) => setAuthModalMode(mode)}
+        />
+
+        <main className="flex-1">
+          {publicPage === 'home' && (
+            <HomePage
+              onNavigate={setPublicPage}
+              onOpenAuth={(mode) => setAuthModalMode(mode)}
+            />
+          )}
+
+          {publicPage === 'about' && (
+            <AboutPage
+              onNavigate={setPublicPage}
+              onOpenAuth={(mode) => setAuthModalMode(mode)}
+            />
+          )}
+
+          {publicPage === 'pricing' && (
+            <PricingPage
+              onNavigate={setPublicPage}
+              onOpenAuth={(mode) => setAuthModalMode(mode)}
+            />
+          )}
+
+          {publicPage === 'blog' && (
+            <BlogPage onNavigate={setPublicPage} />
+          )}
+
+          {publicPage === 'contact' && (
+            <ContactPage onNavigate={setPublicPage} />
+          )}
+
+          {(publicPage === 'privacy' || publicPage === 'terms' || publicPage === 'cookies') && (
+            <LegalPage page={publicPage} onNavigate={setPublicPage} />
+          )}
+        </main>
+
+        <PublicFooter onNavigate={setPublicPage} />
+        <CookieConsentBanner onNavigate={setPublicPage} />
+
+        {/* Authentication Modal */}
+        <AuthModal
+          mode={authModalMode}
+          isOpen={authModalMode !== null}
+          onClose={() => setAuthModalMode(null)}
+          onSuccess={handleAuthSuccess}
+          onSwitchMode={(newMode) => setAuthModalMode(newMode)}
+        />
+      </div>
+    );
+  }
+
+  // ==========================================
+  // SCENARIO 2: POST-LOGIN MEMBER SCREENS
+  // ==========================================
   return (
     <>
       <MainLayout
@@ -179,6 +315,10 @@ export const App: React.FC = () => {
         {activeTab === 'settings' && (
           <Settings />
         )}
+
+        {activeTab === 'billing' && user && (
+          <Billing user={user} />
+        )}
       </MainLayout>
 
       {/* Global Item Inspector Modal */}
@@ -190,6 +330,32 @@ export const App: React.FC = () => {
         onSaveToggle={handleToggleSave}
         onFindSimilar={handleFindSimilar}
       />
+
+      {/* Shopping Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onRemoveItem={(id) => setCartItems((prev) => prev.filter((ci) => ci.item.id !== id))}
+        onUpdateQuantity={(id, qty) =>
+          setCartItems((prev) =>
+            prev.map((ci) => (ci.item.id === id ? { ...ci, quantity: qty } : ci))
+          )
+        }
+        onCheckoutSuccess={() => setCartItems([])}
+      />
+
+      {/* Onboarding Wizard (shown on first login/signup) */}
+      {user && (
+        <OnboardingWizard
+          user={user}
+          isOpen={showOnboarding}
+          onComplete={(updated) => {
+            setPreferences((prev) => ({ ...prev, ...updated }));
+            setShowOnboarding(false);
+          }}
+        />
+      )}
     </>
   );
 };

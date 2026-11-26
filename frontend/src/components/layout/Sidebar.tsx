@@ -13,6 +13,7 @@ import {
   Eye,
   Target,
   Settings,
+  CreditCard,
   ChevronLeft,
   ChevronRight,
   Bot
@@ -77,7 +78,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       title: 'SYSTEM',
       items: [
         { id: 'evaluation', label: 'Evaluation Center', icon: Target },
-        { id: 'settings', label: 'Settings', icon: Settings }
+        { id: 'settings', label: 'Settings', icon: Settings },
+        { id: 'billing', label: 'Billing & Plan', icon: CreditCard }
       ]
     }
   ];

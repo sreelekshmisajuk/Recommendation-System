@@ -11,7 +11,28 @@ export type NavTab =
   | 'performance'
   | 'explainability'
   | 'evaluation'
-  | 'settings';
+  | 'settings'
+  | 'billing';
+
+export type PublicPage = 
+  | 'home'
+  | 'about'
+  | 'pricing'
+  | 'blog'
+  | 'contact'
+  | 'privacy'
+  | 'terms'
+  | 'cookies';
+
+export type AuthModalMode = 'login' | 'signup' | 'forgot' | 'verify' | null;
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  role: string;
+  plan: 'Free Tier' | 'Pro' | 'Enterprise';
+  joinedDate: string;
+}
 
 export interface Item {
   id: string;
@@ -29,6 +50,11 @@ export interface Item {
   similarityScore?: number;
   matchReason?: string;
   factors?: { name: string; weight: number }[];
+}
+
+export interface CartItem {
+  item: Item;
+  quantity: number;
 }
 
 export interface ChatMessage {
@@ -60,16 +86,7 @@ export interface UserPreferences {
   priceRange: [number, number];
   interests: string[];
   dislikedCategories: string[];
-  diversityPreference: 'accuracy' | 'balanced' | 'diversity';
-}
-
-export interface MetricCard {
-  label: string;
-  value: string | number;
-  change: string;
-  isPositive: boolean;
-  timeframe: string;
-  subtext?: string;
+  diversityPreference: 'high' | 'balanced' | 'low';
 }
 
 export interface EvaluationResult {

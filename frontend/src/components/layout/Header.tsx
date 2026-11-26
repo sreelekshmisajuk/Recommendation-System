@@ -22,7 +22,8 @@ const TAB_TITLES: Record<NavTab, { title: string; category: string }> = {
   performance: { title: 'Model Performance Monitoring', category: 'Intelligence' },
   explainability: { title: 'Explainability & Attribution', category: 'Intelligence' },
   evaluation: { title: 'Evaluation Center', category: 'System' },
-  settings: { title: 'System Settings', category: 'System' }
+  settings: { title: 'System Settings', category: 'System' },
+  billing: { title: 'Billing & Plan Manager', category: 'System' }
 };
 
 export const Header: React.FC<HeaderProps> = ({
