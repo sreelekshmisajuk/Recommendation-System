@@ -160,7 +160,7 @@ export const Settings: React.FC = () => {
             <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
             <input
               type="text"
-              defaultValue="Sreeharsha K."
+              placeholder="Enter your name"
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-hidden focus:border-blue-500"
             />
           </div>
@@ -169,7 +169,7 @@ export const Settings: React.FC = () => {
             <label className="block text-xs font-semibold text-slate-700 mb-1">Role / Organization</label>
             <input
               type="text"
-              defaultValue="Senior AI Researcher / RecAI Lab"
+              placeholder="e.g. Researcher, Engineer, Guest"
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-hidden focus:border-blue-500"
             />
           </div>

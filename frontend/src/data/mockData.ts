@@ -172,61 +172,15 @@ export const INITIAL_ITEMS: Item[] = [
   }
 ];
 
-export const INITIAL_INTERACTIONS: Interaction[] = [
-  {
-    id: 'act-001',
-    itemId: 'item-101',
-    itemTitle: 'Elden Ring: Shadow of the Erdtree',
-    category: 'Video Games',
-    type: 'like',
-    timestamp: '10 minutes ago',
-    details: 'User liked recommendation from AI Chat'
-  },
-  {
-    id: 'act-002',
-    itemId: 'item-107',
-    itemTitle: 'Sony WH-1000XM5 Wireless ANC Headphones',
-    category: 'Electronics',
-    type: 'save',
-    timestamp: '45 minutes ago',
-    details: 'Added to Saved Items from Explore'
-  },
-  {
-    id: 'act-003',
-    itemId: 'item-102',
-    itemTitle: 'The Witcher 3: Wild Hunt',
-    category: 'Video Games',
-    type: 'view',
-    timestamp: '2 hours ago',
-    details: 'Viewed item details modal'
-  },
-  {
-    id: 'act-004',
-    itemId: 'item-105',
-    itemTitle: 'Dune: Part Two',
-    category: 'Movies & Media',
-    type: 'search',
-    timestamp: 'Yesterday at 8:40 PM',
-    details: 'Searched query: "sci-fi grand scale cinematic lore"'
-  },
-  {
-    id: 'act-005',
-    itemId: 'item-104',
-    itemTitle: 'Baldur’s Gate 3',
-    category: 'Video Games',
-    type: 'view',
-    timestamp: '2 days ago',
-    details: 'Viewed via Personalized Recommendations'
-  }
-];
+export const INITIAL_INTERACTIONS: Interaction[] = [];
 
 export const INITIAL_PREFERENCES: UserPreferences = {
   categories: ['Video Games', 'Movies & Media', 'Electronics'],
-  favoriteGenres: ['Action RPG', 'Open World', 'Sci-Fi', 'Dark Fantasy', 'Narrative-Rich'],
-  preferredBrands: ['CD Projekt Red', 'FromSoftware', 'Sony', 'Denis Villeneuve', 'A24'],
-  priceRange: [15, 450],
-  interests: ['Environmental Storytelling', 'High Immersion', 'Atmospheric Audio', 'Complex Lore'],
-  dislikedCategories: ['Hyper-casual mobile games', 'Low-budget sequels'],
+  favoriteGenres: [],
+  preferredBrands: [],
+  priceRange: [0, 500],
+  interests: [],
+  dislikedCategories: [],
   diversityPreference: 'balanced'
 };
 

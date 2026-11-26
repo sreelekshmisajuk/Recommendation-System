@@ -160,17 +160,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="p-3 border-t border-slate-100 bg-slate-50/50">
         <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white transition-colors cursor-pointer" onClick={() => onTabChange('settings')}>
           <div className="relative flex-shrink-0">
-            <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-              alt="Avatar"
-              className="w-8 h-8 rounded-full object-cover border border-slate-200"
-            />
+            <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center border border-blue-200 text-xs">
+              U
+            </div>
             <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 rounded-full border border-white" />
           </div>
           {!isCollapsed && (
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-semibold text-slate-800 truncate">Sreeharsha K.</span>
-              <span className="text-[11px] text-slate-400 truncate">Senior AI Researcher</span>
+              <span className="text-xs font-semibold text-slate-800 truncate">My Workspace</span>
+              <span className="text-[11px] text-slate-400 truncate">Session Active</span>
             </div>
           )}
         </div>

@@ -22,8 +22,8 @@ import { Settings } from './pages/Settings';
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('overview');
   const [items] = useState<Item[]>(INITIAL_ITEMS);
-  const [savedItems, setSavedItems] = useState<Item[]>(() => INITIAL_ITEMS.slice(0, 2));
-  const [interactions, setInteractions] = useState<Interaction[]>(INITIAL_INTERACTIONS);
+  const [savedItems, setSavedItems] = useState<Item[]>([]);
+  const [interactions, setInteractions] = useState<Interaction[]>([]);
   const [preferences, setPreferences] = useState<UserPreferences>(INITIAL_PREFERENCES);
   const [globalSearch, setGlobalSearch] = useState<string>('');
 
