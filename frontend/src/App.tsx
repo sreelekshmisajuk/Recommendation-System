@@ -220,6 +220,8 @@ export const App: React.FC = () => {
         preferences={preferences}
         globalSearch={globalSearch}
         onGlobalSearchChange={setGlobalSearch}
+        user={user}
+        onLogout={handleLogout}
       >
         {activeTab === 'overview' && (
           <Overview

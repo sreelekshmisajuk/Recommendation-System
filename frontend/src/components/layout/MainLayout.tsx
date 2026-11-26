@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavTab, UserPreferences } from '../../types';
+import { NavTab, UserPreferences, UserProfile } from '../../types';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
@@ -10,6 +10,8 @@ interface MainLayoutProps {
   preferences: UserPreferences;
   globalSearch: string;
   onGlobalSearchChange: (q: string) => void;
+  user: UserProfile | null;
+  onLogout: () => void;
   children: React.ReactNode;
 }
 
@@ -19,6 +21,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   savedCount,
   globalSearch,
   onGlobalSearchChange,
+  user,
+  onLogout,
   children
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -32,6 +36,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         isCollapsed={collapsed}
         onToggleCollapse={() => setCollapsed(!collapsed)}
         savedCount={savedCount}
+        user={user}
+        onLogout={onLogout}
       />
 
       {/* Main Container with responsive transition */}
@@ -46,6 +52,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           globalSearch={globalSearch}
           onGlobalSearchChange={onGlobalSearchChange}
           onTabChange={onNavigate}
+          user={user}
+          onLogout={onLogout}
         />
 
         {/* Dynamic Page Content */}
