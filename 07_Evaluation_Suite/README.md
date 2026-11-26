@@ -14,7 +14,7 @@ This is a project to evaluate how various LLMs perform on recommendation tasks, 
 
 2. **Navigate to Project**:  
     ```bash
-    cd RecLM-eval
+    cd 07_Evaluation_Suite
     ```
 
 3. **Configure API**:  

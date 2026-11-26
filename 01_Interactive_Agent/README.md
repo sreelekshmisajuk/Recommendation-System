@@ -59,7 +59,7 @@ InteRecAgent consists of 4 necessary components:
     First, install other packages listed in `requirements.txt`
 
     ```bash
-    cd InteRecAgent
+    cd 01_Interactive_Agent
     conda create -n interecagent python==3.9
     conda activate interecagent
     pip install -r requirements.txt
@@ -67,7 +67,7 @@ InteRecAgent consists of 4 necessary components:
 
 2. Prepare data resource
 
-   For your convenience, a volunteer (thanks <a href="mailto:xuhuangcs@mail.ustc.edu.cn">Xu Huang</a> for the contribution!) has prepared a copy of ready-to-run data resources based on public dataset. Please download the resources from [GoogleDrive](https://drive.google.com/file/d/1nSw2cuoi_WEOnHRg_eIyLWGBAjHdelsg/view?usp=drive_link) / [RecDrive](https://rec.ustc.edu.cn/share/baa4d930-48e1-11ee-b20c-3fee0ba82bbd). After you unzip the all_resources.zip file, you will see three folders, corresponding to three domains. Create a folder named "resources" under "InteRecAgent" and copy the data resource to it. For example, the folder structure is like "./InteRecAgent/resources/game".
+   For your convenience, a volunteer (thanks <a href="mailto:xuhuangcs@mail.ustc.edu.cn">Xu Huang</a> for the contribution!) has prepared a copy of ready-to-run data resources based on public dataset. Please download the resources from [GoogleDrive](https://drive.google.com/file/d/1nSw2cuoi_WEOnHRg_eIyLWGBAjHdelsg/view?usp=drive_link) / [RecDrive](https://rec.ustc.edu.cn/share/baa4d930-48e1-11ee-b20c-3fee0ba82bbd). After you unzip the all_resources.zip file, you will see three folders, corresponding to three domains. Create a folder named "resources" under "01_Interactive_Agent" and copy the data resource to it. For example, the folder structure is like "./01_Interactive_Agent/resources/game".
 
 3. How to run
 
