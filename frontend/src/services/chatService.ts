@@ -13,33 +13,68 @@ export const chatService = {
   ): Promise<ChatMessage> {
     const startTime = performance.now();
 
-    // 1. Check if backend is available
-    const backendRes = await request<any>('/chat', {
-      method: 'POST',
-      body: JSON.stringify({
-        message: userText,
-        history,
-        mode: options.mode,
-        style: options.style
-      })
-    });
+    // 1. Send query to RecAI Python Backend (Gemini-connected)
+    try {
+      const backendRes = await request<any>('/chat', {
+        method: 'POST',
+        body: JSON.stringify({
+          message: userText,
+          history: history.slice(-6).map((h) => ({ role: h.sender === 'user' ? 'user' : 'assistant', content: h.text })),
+          mode: options.mode,
+          style: options.style
+        })
+      });
 
-    if (backendRes.success && backendRes.data?.text) {
-      return {
-        id: `msg-${Date.now()}`,
-        sender: 'assistant',
-        text: backendRes.data.text,
-        items: backendRes.data.items,
-        followUpQuestions: backendRes.data.followUpQuestions,
-        mode: options.mode,
-        style: options.style,
-        latencyMs: backendRes.latencyMs,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
+      if (backendRes.success && backendRes.data?.data?.text) {
+        const text: string = backendRes.data.data.text;
+        const modelUsed: string = backendRes.data.data.modelUsed || 'gemini-3.1-flash-lite';
+        const followUps: string[] = backendRes.data.data.followUpQuestions || [];
+
+        // Match items mentioned or relevant to the text
+        const matchedItems = INITIAL_ITEMS.filter((item) => {
+          const lowerText = text.toLowerCase();
+          const lowerTitle = item.title.toLowerCase();
+          const firstWord = lowerTitle.split(' ')[0];
+          return lowerText.includes(lowerTitle) || (firstWord.length > 3 && lowerText.includes(firstWord));
+        });
+
+        // Ensure at least 2-3 relevant items are shown as rich visual cards
+        let finalItems: Item[] = matchedItems;
+        if (finalItems.length === 0) {
+          const lowerUser = userText.toLowerCase();
+          if (lowerUser.includes('movie') || lowerUser.includes('film') || lowerUser.includes('dune')) {
+            finalItems = [INITIAL_ITEMS[4], INITIAL_ITEMS[5]];
+          } else if (lowerUser.includes('headphone') || lowerUser.includes('keyboard') || lowerUser.includes('gear')) {
+            finalItems = [INITIAL_ITEMS[6], INITIAL_ITEMS[7]];
+          } else {
+            finalItems = options.mode === 'diversity' 
+              ? [INITIAL_ITEMS[0], INITIAL_ITEMS[4], INITIAL_ITEMS[6]]
+              : [INITIAL_ITEMS[0], INITIAL_ITEMS[1], INITIAL_ITEMS[2]];
+          }
+        }
+
+        return {
+          id: `msg-${Date.now()}`,
+          sender: 'assistant',
+          text,
+          items: finalItems,
+          followUpQuestions: followUps.length > 0 ? followUps : [
+            'Would you like recommendations within a specific budget?',
+            'Show me more items from this specific genre',
+            'Find alternatives with different mechanics'
+          ],
+          mode: options.mode,
+          style: options.style,
+          latencyMs: backendRes.latencyMs || Math.round(performance.now() - startTime),
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+      }
+    } catch (e) {
+      console.warn('Backend request failed, falling back to simulated CRS engine:', e);
     }
 
     // 2. High-fidelity client-side intelligence fallback
-    await new Promise((resolve) => setTimeout(resolve, 850));
+    await new Promise((resolve) => setTimeout(resolve, 600));
     const latencyMs = Math.round(performance.now() - startTime);
 
     const lowerQuery = userText.toLowerCase();
