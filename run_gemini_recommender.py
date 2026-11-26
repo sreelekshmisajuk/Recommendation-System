@@ -26,23 +26,44 @@ def load_gemini_config(config_path="07_Evaluation_Suite/openai_api_config.yaml")
             
     return api_key, api_base
 
+def call_gemini_with_fallback(client, messages, preferred_model="gemini-3.1-flash-lite", temperature=0.3, max_tokens=500):
+    fallback_models = [preferred_model, "gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"]
+    # Deduplicate while preserving order
+    seen = set()
+    models = [m for m in fallback_models if not (m in seen or seen.add(m))]
+    
+    last_err = None
+    for m in models:
+        try:
+            response = client.chat.completions.create(
+                model=m,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+            return response.choices[0].message.content, m
+        except Exception as e:
+            last_err = e
+            continue
+    raise last_err
+
 def test_gemini_connection(client, model_name):
-    print(f"\n[*] Testing connection to Google Gemini API using model '{model_name}'...")
+    print(f"\n[*] Testing connection to Google Gemini API (model: '{model_name}')...")
     try:
-        response = client.chat.completions.create(
-            model=model_name,
-            messages=[
+        content, used_model = call_gemini_with_fallback(
+            client,
+            [
                 {"role": "system", "content": "You are an AI assistant for recommender systems."},
                 {"role": "user", "content": "Respond with: 'Gemini API is successfully connected to RecAI!'"}
             ],
-            max_tokens=50
+            preferred_model=model_name,
+            max_tokens=60
         )
-        msg = response.choices[0].message.content.strip()
-        print(f"[+] Success: {msg}\n")
-        return True
+        print(f"[+] Success (via {used_model}): {content.strip()}\n")
+        return used_model
     except Exception as e:
         print(f"[-] Connection Error: {e}")
-        return False
+        return None
 
 def run_recommendation_demo(client, model_name):
     print("=" * 65)
@@ -57,16 +78,17 @@ def run_recommendation_demo(client, model_name):
         "and suggest follow-up questions to refine their taste."
     )
     
-    response = client.chat.completions.create(
-        model=model_name,
-        messages=[
+    content, used_m = call_gemini_with_fallback(
+        client,
+        [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_query}
         ],
+        preferred_model=model_name,
         temperature=0.3,
         max_tokens=600
     )
-    print(f"RecAI (Gemini):\n{response.choices[0].message.content}\n")
+    print(f"RecAI (Gemini - {used_m}):\n{content}\n")
 
     print("=" * 65)
     print("DEMO 2: Model Explainer (RecExplainer Style)")
@@ -83,21 +105,22 @@ def run_recommendation_demo(client, model_name):
         "Formulate a clear, interpretable explanation justifying the recommendation in terms of behavioral affinity and gameplay mechanics."
     )
     
-    response2 = client.chat.completions.create(
-        model=model_name,
-        messages=[
+    content2, used_m2 = call_gemini_with_fallback(
+        client,
+        [
             {"role": "system", "content": explain_sys_prompt},
             {"role": "user", "content": explain_query}
         ],
+        preferred_model=model_name,
         temperature=0.2,
         max_tokens=400
     )
-    print(f"RecExplainer:\n{response2.choices[0].message.content}\n")
+    print(f"RecExplainer ({used_m2}):\n{content2}\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Run RecAI with Google Gemini API")
     parser.add_argument("--api_key", type=str, default="", help="Your Google Gemini API key")
-    parser.add_argument("--model", type=str, default="gemini-1.5-flash", help="Gemini model name (e.g. gemini-1.5-flash, gemini-2.0-flash, gemini-1.5-pro)")
+    parser.add_argument("--model", type=str, default="gemini-3.1-flash-lite", help="Gemini model name (e.g. gemini-3.1-flash-lite, gemini-3.8-flash, gemini-3.5-flash-lite)")
     parser.add_argument("--base_url", type=str, default="https://generativelanguage.googleapis.com/v1beta/openai/", help="Gemini OpenAI-compatible endpoint")
     args = parser.parse_args()
 
@@ -123,10 +146,11 @@ def main():
         sys.exit(1)
 
     client = OpenAI(api_key=api_key, base_url=api_base)
-    if test_gemini_connection(client, args.model):
-        run_recommendation_demo(client, args.model)
+    active_model = test_gemini_connection(client, args.model)
+    if active_model:
+        run_recommendation_demo(client, active_model)
         print("=" * 65)
-        print("[+] RecAI is operational with Google Gemini API!")
+        print(f"[+] RecAI is operational with Google Gemini API ({active_model})!")
         print("=" * 65)
 
 if __name__ == "__main__":
