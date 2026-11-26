@@ -23,6 +23,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [agreedTerms, setAgreedTerms] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
+  const [signupSuccessMsg, setSignupSuccessMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen || !mode) return null;
@@ -39,11 +40,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       return;
     }
 
-    // Simulate instant secure auth & onboarding redirect
+    if (mode === 'signup') {
+      // Step 1: User creates account
+      // Step 2: Show success notification and immediately redirect to Log In screen
+      setTimeout(() => {
+        setIsLoading(false);
+        setSignupSuccessMsg(true);
+        setPassword(''); // Clear password field for secure login
+        onSwitchMode('login'); // Redirect to login!
+      }, 700);
+      return;
+    }
+
+    // mode === 'login' -> Authenticate and enter User Dashboard!
     setTimeout(() => {
       setIsLoading(false);
       onSuccess({
-        name: name || (email.split('@')[0] ? email.split('@')[0].toUpperCase() : 'Guest User'),
+        name: name || (email.split('@')[0] ? email.split('@')[0].toUpperCase() : 'Workspace User'),
         email: email || 'user@recai.io',
         role: 'AI Engineer',
         plan: 'Pro',
@@ -80,6 +93,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             {mode === 'forgot' && 'Enter your account email to receive a recovery link.'}
           </p>
         </div>
+
+        {/* Account Created Success Alert banner shown when redirected to Login */}
+        {mode === 'login' && signupSuccessMsg && (
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3.5 rounded-xl flex items-center gap-2.5 text-xs font-semibold animate-in fade-in">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span>Account created successfully! Please enter your password to log in to your dashboard.</span>
+          </div>
+        )}
 
         {/* Forgot password success state */}
         {mode === 'forgot' && recoverySent ? (
