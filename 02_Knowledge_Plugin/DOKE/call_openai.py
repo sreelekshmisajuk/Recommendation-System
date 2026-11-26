@@ -45,13 +45,16 @@ def generate_Davinci(api_key, text):
     return "None"
 
 def generate_chatgpt(api_key, prompt, version):
-    # 使用你的 API 密钥初始化 OpenAI GPT-3
-    client = OpenAI(api_key=api_key)
+    base_url = os.environ.get("OPENAI_API_BASE") or os.environ.get("GEMINI_API_BASE") or "https://generativelanguage.googleapis.com/v1beta/openai/"
+    effective_key = api_key if (api_key and api_key != "your openai keys") else (os.environ.get("GEMINI_API_KEY") or os.environ.get("OPENAI_API_KEY"))
+    client = OpenAI(api_key=effective_key, base_url=base_url)
     text = [{'role': 'user', 'content': prompt}]
-    if version == "0301":
+    if "gemini" in version.lower():
+        model = version
+    elif version == "0301":
         model = "gpt-3.5-turbo-0301"
     else:
-        model = "gpt-3.5-turbo"
+        model = os.environ.get("MODEL_NAME", "gemini-1.5-flash")
 
     for i in range(MAX_RETRIES):
         try:

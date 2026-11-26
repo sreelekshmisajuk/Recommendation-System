@@ -1,13 +1,13 @@
 API_BASE:
-    ""
+    "https://generativelanguage.googleapis.com/v1beta/openai/"
 TOKEN_URL:
     ""
 API_VERSION:
-    "2024-02-15-preview"
+    ""
 API_TYPE:
-    "gpt"
+    "gemini"
 API_KEY:
-    "xxx"
+    "YOUR_GEMINI_API_KEY"
 API_COST_FILE:
     "cost.json"
 MAX_THREADS:

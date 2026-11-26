@@ -14,39 +14,53 @@ import multiprocessing
 import threading
 from datetime import datetime
 lock = threading.Lock()
-api_config = yaml.safe_load(open("openai_api_config.yaml"))
+_config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "openai_api_config.yaml")
+if os.path.exists(_config_path):
+    api_config = yaml.safe_load(open(_config_path, encoding='utf-8'))
+elif os.path.exists("openai_api_config.yaml"):
+    api_config = yaml.safe_load(open("openai_api_config.yaml", encoding='utf-8'))
+else:
+    api_config = {}
 
-from openai import AzureOpenAI
+from openai import OpenAI, AzureOpenAI
 
-# If the user provides TOKEN_URL, we treat it as Azure AD token flow authentication;
-# Otherwise, use api_key authentication directly to avoid relying on local Azure CLI.   
-if api_config.get('TOKEN_URL'):
-    from azure.identity import get_bearer_token_provider, AzureCliCredential
+api_type = str(api_config.get('API_TYPE', 'gemini')).lower()
+api_base = api_config.get('API_BASE') or os.getenv('GEMINI_API_BASE') or os.getenv('OPENAI_API_BASE') or 'https://generativelanguage.googleapis.com/v1beta/openai/'
+api_key = api_config.get('API_KEY') or os.getenv('GEMINI_API_KEY') or os.getenv('OPENAI_API_KEY') or 'xxx'
 
-    try:
-        credential = AzureCliCredential()  # depends on locally installed azure-cli
-    except Exception:
-        # Azure CLI unavailable, automatically fallback to api_key authentication
-        credential = None
+if api_type == 'azure':
+    if api_config.get('TOKEN_URL'):
+        from azure.identity import get_bearer_token_provider, AzureCliCredential
 
-    if credential is not None:
-        token_provider = get_bearer_token_provider(credential, api_config['TOKEN_URL'])
-        client = AzureOpenAI(
-            api_version=api_config['API_VERSION'],
-            azure_ad_token_provider=token_provider,
-            azure_endpoint=api_config['API_BASE']
-        )
+        try:
+            credential = AzureCliCredential()
+        except Exception:
+            credential = None
+
+        if credential is not None:
+            token_provider = get_bearer_token_provider(credential, api_config['TOKEN_URL'])
+            client = AzureOpenAI(
+                api_version=api_config.get('API_VERSION', '2024-02-15-preview'),
+                azure_ad_token_provider=token_provider,
+                azure_endpoint=api_base
+            )
+        else:
+            client = AzureOpenAI(
+                api_key=api_key,
+                api_version=api_config.get('API_VERSION', '2024-02-15-preview'),
+                azure_endpoint=api_base
+            )
     else:
         client = AzureOpenAI(
-            api_key=api_config['API_KEY'],
-            api_version=api_config['API_VERSION'],
-            azure_endpoint=api_config['API_BASE']
+            api_key=api_key,
+            api_version=api_config.get('API_VERSION', '2024-02-15-preview'),
+            azure_endpoint=api_base
         )
 else:
-    client = AzureOpenAI(
-        api_key=api_config['API_KEY'],
-        api_version=api_config['API_VERSION'],
-        azure_endpoint=api_config['API_BASE']
+    # Google Gemini API (via OpenAI-compatible endpoint) or standard OpenAI
+    client = OpenAI(
+        api_key=api_key,
+        base_url=api_base
     )
 
 

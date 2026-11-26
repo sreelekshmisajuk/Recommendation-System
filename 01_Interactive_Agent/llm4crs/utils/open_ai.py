@@ -45,10 +45,17 @@ class OpenAICall:
         stop_words: Union[str, List[str]] = None,
     ) -> None:
         self.model = model
-        self.api_key = api_key
-        self.api_type = api_type if api_type else "open_ai"
-        self.api_base = api_base if api_base else "https://api.openai.com/v1"
-        self.api_version = api_version if api_type!="open_ai" else None
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("OPENAI_API_KEY")
+        self.api_type = (api_type if api_type else "open_ai").lower()
+        if self.api_type == "gemini":
+            self.api_type = "open_ai"
+            if not api_base or api_base == "https://api.openai.com/v1":
+                self.api_base = "https://generativelanguage.googleapis.com/v1beta/openai/"
+            else:
+                self.api_base = api_base
+        else:
+            self.api_base = api_base if api_base else os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1")
+        self.api_version = api_version if self.api_type != "open_ai" else None
         self.temperature = temperature
         self.model_type = model_type
         self.retry_limits = retry_limits
@@ -57,7 +64,7 @@ class OpenAICall:
 
         if (self.api_type) and (self.api_type not in {"open_ai", "azure"}):
             raise ValueError(
-                f"Only open_ai/azure API are supported, while got {api_type}."
+                f"Only open_ai/azure/gemini API are supported, while got {api_type}."
             )
 
         model_type = "chat_completion" if "chat" in model_type else model_type
