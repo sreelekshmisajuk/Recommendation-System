@@ -24,12 +24,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [agreedTerms, setAgreedTerms] = useState(false);
   const [recoverySent, setRecoverySent] = useState(false);
   const [signupSuccessMsg, setSignupSuccessMsg] = useState(false);
+  const [validationError, setValidationError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Password Validation Criteria:
+  // 1. Min 8 characters
+  // 2. Contains at least one uppercase letter
+  // 3. Contains at least one number
+  // 4. Contains at least one special character
+  const hasMinLength = password.length >= 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
+  const isPasswordValid = hasMinLength && hasUpperCase && hasNumber && hasSpecial;
+
+  // Strength score: 0 to 4
+  const strengthScore = [hasMinLength, hasUpperCase, hasNumber, hasSpecial].filter(Boolean).length;
 
   if (!isOpen || !mode) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setValidationError('');
+
+    if (mode === 'signup' && !isPasswordValid) {
+      setValidationError('Password does not meet the security criteria.');
+      return;
+    }
+
     setIsLoading(true);
 
     if (mode === 'forgot') {
@@ -220,6 +242,54 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
+
+                {/* Real-time Password Strength & Validation Indicator for Sign Up */}
+                {mode === 'signup' && password.length > 0 && (
+                  <div className="mt-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2 animate-in fade-in duration-150">
+                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
+                      <span>Password Strength</span>
+                      <span className={`font-bold ${
+                        strengthScore <= 1 ? 'text-rose-600' : strengthScore <= 3 ? 'text-amber-600' : 'text-emerald-600'
+                      }`}>
+                        {strengthScore <= 1 ? 'Weak' : strengthScore <= 3 ? 'Medium' : 'Strong'}
+                      </span>
+                    </div>
+
+                    {/* Strength Bar */}
+                    <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden flex gap-0.5">
+                      <div className={`h-full flex-1 transition-all ${strengthScore >= 1 ? (strengthScore <= 1 ? 'bg-rose-500' : strengthScore <= 3 ? 'bg-amber-500' : 'bg-emerald-500') : 'bg-slate-200'}`} />
+                      <div className={`h-full flex-1 transition-all ${strengthScore >= 2 ? (strengthScore <= 3 ? 'bg-amber-500' : 'bg-emerald-500') : 'bg-slate-200'}`} />
+                      <div className={`h-full flex-1 transition-all ${strengthScore >= 3 ? (strengthScore <= 3 ? 'bg-amber-500' : 'bg-emerald-500') : 'bg-slate-200'}`} />
+                      <div className={`h-full flex-1 transition-all ${strengthScore === 4 ? 'bg-emerald-500' : 'bg-slate-200'}`} />
+                    </div>
+
+                    {/* Criteria Checklist */}
+                    <div className="grid grid-cols-2 gap-1.5 pt-1 text-[10px]">
+                      <div className={`flex items-center gap-1.5 ${hasMinLength ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${hasMinLength ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                        <span>At least 8 characters</span>
+                      </div>
+                      <div className={`flex items-center gap-1.5 ${hasUpperCase ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${hasUpperCase ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                        <span>1 uppercase letter (A-Z)</span>
+                      </div>
+                      <div className={`flex items-center gap-1.5 ${hasNumber ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${hasNumber ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                        <span>1 number (0-9)</span>
+                      </div>
+                      <div className={`flex items-center gap-1.5 ${hasSpecial ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${hasSpecial ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                        <span>1 special symbol (!@#$)</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {validationError && (
+              <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-semibold animate-in fade-in">
+                {validationError}
               </div>
             )}
 
