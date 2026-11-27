@@ -65,15 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'chat', label: 'AI Recommendation Chat', icon: MessageSquareText },
         { id: 'explore', label: 'Explore Items', icon: Compass },
         { id: 'personalized', label: 'Personalized For You', icon: Sparkles },
-        { id: 'similar', label: 'Similar Items', icon: GitFork }
-      ]
-    },
-    {
-      title: 'PERSONALIZATION',
-      items: [
-        { id: 'profile', label: 'My Profile & Preferences', icon: User },
-        { id: 'history', label: 'Interaction History', icon: History },
-        { id: 'saved', label: 'Saved Items', icon: Bookmark, badge: savedCount > 0 ? savedCount : undefined }
+        { id: 'similar', label: 'Similar Items', icon: GitFork },
+        { id: 'profile', label: 'My Profile & Preferences', icon: User }
       ]
     },
     {

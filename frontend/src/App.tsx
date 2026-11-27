@@ -272,7 +272,12 @@ export const App: React.FC = () => {
         {activeTab === 'profile' && (
           <ProfilePage
             user={user}
+            savedItems={savedItems}
+            interactions={interactions}
             onProfileUpdated={(updated) => setUser(updated)}
+            onViewDetails={handleSelectItem}
+            onSaveToggle={handleToggleSave}
+            onClearHistory={() => setInteractions([])}
           />
         )}
 
