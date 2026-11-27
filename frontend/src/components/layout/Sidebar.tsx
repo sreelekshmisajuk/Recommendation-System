@@ -65,14 +65,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'chat', label: 'AI Recommendation Chat', icon: MessageSquareText },
         { id: 'explore', label: 'Explore Items', icon: Compass },
         { id: 'personalized', label: 'Personalized For You', icon: Sparkles },
-        { id: 'similar', label: 'Similar Items', icon: GitFork },
-        { id: 'profile', label: 'My Profile', icon: User }
+        { id: 'similar', label: 'Similar Items', icon: GitFork }
       ]
     },
     {
       title: 'PERSONALIZATION',
       items: [
-        { id: 'preferences', label: 'My Preferences', icon: SlidersHorizontal },
+        { id: 'profile', label: 'My Profile & Preferences', icon: User },
         { id: 'history', label: 'Interaction History', icon: History },
         { id: 'saved', label: 'Saved Items', icon: Bookmark, badge: savedCount > 0 ? savedCount : undefined }
       ]
@@ -197,16 +196,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }}
                 className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 font-medium text-slate-700 flex items-center gap-2"
               >
-                <User className="w-3.5 h-3.5 text-slate-400" /> View Profile
-              </button>
-              <button
-                onClick={() => {
-                  onTabChange('preferences');
-                  setShowProfileMenu(false);
-                }}
-                className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 font-medium text-slate-700 flex items-center gap-2"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" /> Preferences
+                <User className="w-3.5 h-3.5 text-slate-400" /> My Profile & Preferences
               </button>
               <button
                 onClick={() => {
