@@ -356,12 +356,58 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onProfileUpdated
           </div>
 
           {/* Interests */}
-          <div className="space-y-2 pt-2">
-            <label className="block text-xs font-semibold text-slate-700">Specific Interests & Themes</label>
-            <div className="flex gap-2">
+          <div className="space-y-3 pt-2">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700">Specific Interests & Themes</label>
+              <p className="text-[11px] text-slate-400 mt-0.5">Click any suggested theme below to add or remove it, or type your own.</p>
+            </div>
+
+            {/* Quick-Select Suggestions */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Popular Themes & Mechanics:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Environmental Lore',
+                  'Tactical Combat',
+                  'Atmospheric Audio',
+                  'Dark Fantasy',
+                  'Open World Agency',
+                  'Cinematic Storytelling',
+                  'Complex Skill Trees',
+                  'Cyberpunk Dystopia',
+                  'Minimalist Hardware',
+                  'High Immersion'
+                ].map((preset) => {
+                  const isSelected = preferences.interests.includes(preset);
+                  return (
+                    <button
+                      type="button"
+                      key={preset}
+                      onClick={() => {
+                        if (isSelected) {
+                          handleRemoveInterest(preset);
+                        } else {
+                          setPreferences(prev => ({ ...prev, interests: [...prev.interests, preset] }));
+                        }
+                      }}
+                      className={`px-3 py-1 rounded-xl text-xs font-semibold border transition-all ${
+                        isSelected
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+                      }`}
+                    >
+                      {isSelected ? `✓ ${preset}` : `+ ${preset}`}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Custom Input */}
+            <div className="flex gap-2 pt-1">
               <input
                 type="text"
-                placeholder="Add theme (e.g. Environmental Lore, Tactical Combat)"
+                placeholder="Type custom theme and press Add..."
                 value={newInterest}
                 onChange={(e) => setNewInterest(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddInterest(); } }}
@@ -372,34 +418,84 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onProfileUpdated
                 onClick={handleAddInterest}
                 className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl"
               >
-                Add
+                Add Custom
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-1">
-              {preferences.interests.length === 0 ? (
-                <span className="text-xs text-slate-400 italic">No interests added yet.</span>
-              ) : (
-                preferences.interests.map((it) => (
-                  <span
-                    key={it}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-medium"
-                  >
-                    <span>{it}</span>
-                    <button type="button" onClick={() => handleRemoveInterest(it)} className="text-blue-500 hover:text-blue-800 font-bold">×</button>
-                  </span>
-                ))
-              )}
+            {/* Selected Active Interests */}
+            <div className="pt-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Your Selected Themes ({preferences.interests.length}):</span>
+              <div className="flex flex-wrap gap-2">
+                {preferences.interests.length === 0 ? (
+                  <span className="text-xs text-slate-400 italic">No interests selected yet. Choose from above or add custom ones.</span>
+                ) : (
+                  preferences.interests.map((it) => (
+                    <span
+                      key={it}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold"
+                    >
+                      <span>{it}</span>
+                      <button type="button" onClick={() => handleRemoveInterest(it)} className="text-blue-500 hover:text-blue-800 font-bold ml-1">×</button>
+                    </span>
+                  ))
+                )}
+              </div>
             </div>
           </div>
 
           {/* Favorite Genres */}
-          <div className="space-y-2 pt-2">
-            <label className="block text-xs font-semibold text-slate-700">Favorite Genres or Item Types</label>
-            <div className="flex gap-2">
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700">Favorite Genres or Item Types</label>
+              <p className="text-[11px] text-slate-400 mt-0.5">Click any genre below to quickly add it to your recommendation taste profile.</p>
+            </div>
+
+            {/* Quick-Select Suggestions */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] uppercase font-bold text-slate-400">Popular Genres & Categories:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Action RPG',
+                  'Open World',
+                  'Sci-Fi Epic',
+                  'Dark Fantasy',
+                  'Story Rich',
+                  'Historical Drama',
+                  'Wireless Audio',
+                  'Hi-Fi Peripherals',
+                  'Turn-Based Strategy',
+                  'Indie Masterpiece'
+                ].map((genre) => {
+                  const isSelected = preferences.favoriteGenres.includes(genre);
+                  return (
+                    <button
+                      type="button"
+                      key={genre}
+                      onClick={() => {
+                        if (isSelected) {
+                          handleRemoveGenre(genre);
+                        } else {
+                          setPreferences(prev => ({ ...prev, favoriteGenres: [...prev.favoriteGenres, genre] }));
+                        }
+                      }}
+                      className={`px-3 py-1 rounded-xl text-xs font-semibold border transition-all ${
+                        isSelected
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+                      }`}
+                    >
+                      {isSelected ? `✓ ${genre}` : `+ ${genre}`}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Custom Input */}
+            <div className="flex gap-2 pt-1">
               <input
                 type="text"
-                placeholder="Add genre (e.g. Action RPG, Sci-Fi Epic, Hi-Fi Audio)"
+                placeholder="Type custom genre and press Add..."
                 value={newGenre}
                 onChange={(e) => setNewGenre(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddGenre(); } }}
@@ -410,24 +506,28 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onProfileUpdated
                 onClick={handleAddGenre}
                 className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl"
               >
-                Add
+                Add Custom
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-1">
-              {preferences.favoriteGenres.length === 0 ? (
-                <span className="text-xs text-slate-400 italic">No favorite genres added yet.</span>
-              ) : (
-                preferences.favoriteGenres.map((g) => (
-                  <span
-                    key={g}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-medium"
-                  >
-                    <span>{g}</span>
-                    <button type="button" onClick={() => handleRemoveGenre(g)} className="text-indigo-500 hover:text-indigo-800 font-bold">×</button>
-                  </span>
-                ))
-              )}
+            {/* Selected Active Genres */}
+            <div className="pt-1">
+              <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Your Selected Genres ({preferences.favoriteGenres.length}):</span>
+              <div className="flex flex-wrap gap-2">
+                {preferences.favoriteGenres.length === 0 ? (
+                  <span className="text-xs text-slate-400 italic">No favorite genres selected yet. Choose from above or add custom ones.</span>
+                ) : (
+                  preferences.favoriteGenres.map((g) => (
+                    <span
+                      key={g}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold"
+                    >
+                      <span>{g}</span>
+                      <button type="button" onClick={() => handleRemoveGenre(g)} className="text-indigo-500 hover:text-indigo-800 font-bold ml-1">×</button>
+                    </span>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </section>
