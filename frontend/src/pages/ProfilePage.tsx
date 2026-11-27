@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   User,
   Mail,
@@ -13,7 +13,10 @@ import {
   Layers,
   Heart,
   Tag,
-  Key
+  Key,
+  UploadCloud,
+  Trash2,
+  Image as ImageIcon
 } from 'lucide-react';
 import { UserProfile, RecommendationPreferences } from '../types';
 import { profileService } from '../services/profileService';
@@ -29,6 +32,30 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onProfileUpdated
   const [username, setUsername] = useState(user?.username || '');
   const [role, setRole] = useState(user?.role || '');
   const [avatar, setAvatar] = useState(user?.avatar || '');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        setErrorMessage('Image size should be less than 2MB.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result as string);
+        setSuccessMessage('Avatar uploaded! Click Save Profile Changes to persist.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveAvatar = () => {
+    setAvatar('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   // Recommendation Profile State
   const [preferences, setPreferences] = useState<RecommendationPreferences>({
@@ -189,33 +216,56 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ user, onProfileUpdated
             <span className="text-[11px] text-slate-400">Actual Authenticated User Data</span>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 p-4 bg-slate-50/70 rounded-2xl border border-slate-200">
+            {/* Avatar Preview */}
+            <div className="relative group flex-shrink-0">
               {avatar ? (
                 <img
                   src={avatar}
                   alt={name || 'Avatar'}
-                  className="w-20 h-20 rounded-2xl object-cover border-2 border-slate-200"
+                  className="w-24 h-24 rounded-2xl object-cover border-2 border-slate-200 shadow-sm"
                 />
               ) : (
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-2xl flex items-center justify-center border-2 border-white shadow-md">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 text-white font-black text-3xl flex items-center justify-center border-2 border-white shadow-md">
                   {initial}
                 </div>
               )}
               <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" title="Active Account" />
             </div>
 
-            <div className="flex-1 w-full space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Avatar Image URL (Optional)</label>
-                <input
-                  type="url"
-                  placeholder="https://example.com/photo.jpg"
-                  value={avatar}
-                  onChange={(e) => setAvatar(e.target.value)}
-                  className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-hidden focus:border-blue-500"
-                />
-                <p className="text-[11px] text-slate-400 mt-1">If blank, your actual name initial ({initial}) is displayed.</p>
+            {/* Upload & Controls */}
+            <div className="flex-1 space-y-2">
+              <label className="block text-xs font-bold text-slate-800">Profile Photo / Avatar</label>
+              <p className="text-[11px] text-slate-500">
+                Upload a JPEG, PNG, or WebP photo from your computer (max 2MB), or paste an image link.
+              </p>
+
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/*"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+                >
+                  <UploadCloud className="w-4 h-4" /> Upload New Photo
+                </button>
+
+                {avatar && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveAvatar}
+                    className="px-3.5 py-2 bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-rose-600 text-xs font-semibold rounded-xl transition-colors flex items-center gap-1.5"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Remove
+                  </button>
+                )}
               </div>
             </div>
           </div>
