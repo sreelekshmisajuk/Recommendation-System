@@ -360,6 +360,7 @@ export const App: React.FC = () => {
         <OnboardingWizard
           user={user}
           isOpen={showOnboarding}
+          onSkip={() => setShowOnboarding(false)}
           onComplete={(updated) => {
             setPreferences((prev) => ({ ...prev, ...updated }));
             setShowOnboarding(false);
