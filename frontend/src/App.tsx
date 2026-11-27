@@ -47,6 +47,7 @@ import { Explainability } from './pages/Explainability';
 import { EvaluationCenter } from './pages/EvaluationCenter';
 import { Settings } from './pages/Settings';
 import { Billing } from './pages/Billing';
+import { ProfilePage } from './pages/ProfilePage';
 
 export const App: React.FC = () => {
   // Authentication & View Mode State
@@ -265,6 +266,13 @@ export const App: React.FC = () => {
             savedItems={savedItems}
             onViewDetails={handleSelectItem}
             onSaveToggle={handleToggleSave}
+          />
+        )}
+
+        {activeTab === 'profile' && (
+          <ProfilePage
+            user={user}
+            onProfileUpdated={(updated) => setUser(updated)}
           />
         )}
 

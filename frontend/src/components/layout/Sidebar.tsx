@@ -65,7 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: 'chat', label: 'AI Recommendation Chat', icon: MessageSquareText },
         { id: 'explore', label: 'Explore Items', icon: Compass },
         { id: 'personalized', label: 'Personalized For You', icon: Sparkles },
-        { id: 'similar', label: 'Similar Items', icon: GitFork }
+        { id: 'similar', label: 'Similar Items', icon: GitFork },
+        { id: 'profile', label: 'My Profile', icon: User }
       ]
     },
     {
@@ -194,12 +195,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="space-y-0.5 text-xs">
               <button
                 onClick={() => {
+                  onTabChange('profile');
+                  setShowProfileMenu(false);
+                }}
+                className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 font-medium text-slate-700 flex items-center gap-2"
+              >
+                <User className="w-3.5 h-3.5 text-slate-400" /> View Profile
+              </button>
+              <button
+                onClick={() => {
+                  onTabChange('preferences');
+                  setShowProfileMenu(false);
+                }}
+                className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 font-medium text-slate-700 flex items-center gap-2"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" /> Preferences
+              </button>
+              <button
+                onClick={() => {
                   onTabChange('settings');
                   setShowProfileMenu(false);
                 }}
                 className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 font-medium text-slate-700 flex items-center gap-2"
               >
-                <User className="w-3.5 h-3.5 text-slate-400" /> Account Profile
+                <Settings className="w-3.5 h-3.5 text-slate-400" /> Account Settings
               </button>
               <button
                 onClick={() => {

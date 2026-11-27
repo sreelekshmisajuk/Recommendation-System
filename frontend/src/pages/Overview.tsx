@@ -103,28 +103,11 @@ export const Overview: React.FC<OverviewProps> = ({
               <Sparkles className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-slate-900">12,480</div>
+          <div className="text-2xl font-bold text-slate-900">{items.length}</div>
           <div className="flex items-center gap-1.5 mt-2 text-xs">
             <span className="text-emerald-600 font-medium flex items-center">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> +14.2%
+              Active in live catalog
             </span>
-            <span className="text-slate-400">vs last 30 days</span>
-          </div>
-        </div>
-
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs hover:border-slate-300 transition-all">
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium">Items Viewed</span>
-            <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
-              <Eye className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-slate-900">1,482</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs">
-            <span className="text-emerald-600 font-medium flex items-center">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> +8.1%
-            </span>
-            <span className="text-slate-400">vs last 30 days</span>
           </div>
         </div>
 
@@ -137,8 +120,7 @@ export const Overview: React.FC<OverviewProps> = ({
           </div>
           <div className="text-2xl font-bold text-slate-900">{savedItems.length}</div>
           <div className="flex items-center gap-1.5 mt-2 text-xs">
-            <span className="text-blue-600 font-medium">Active in wishlist</span>
-            <span className="text-slate-400">• Dynamic</span>
+            <span className="text-blue-600 font-medium">{savedItems.length === 0 ? 'No items saved yet' : 'In your wishlist'}</span>
           </div>
         </div>
 

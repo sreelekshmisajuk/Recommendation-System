@@ -4,6 +4,7 @@ export type NavTab =
   | 'explore'
   | 'personalized'
   | 'similar'
+  | 'profile'
   | 'preferences'
   | 'history'
   | 'saved'
@@ -27,11 +28,26 @@ export type PublicPage =
 export type AuthModalMode = 'login' | 'signup' | 'forgot' | 'verify' | null;
 
 export interface UserProfile {
+  id?: string;
   name: string;
   email: string;
+  username?: string;
   role: string;
-  plan: 'Free Tier' | 'Pro' | 'Enterprise';
-  joinedDate: string;
+  plan: 'Developer Free' | 'Pro Tier' | 'Enterprise Mesh' | string;
+  avatar?: string;
+  createdAt?: string;
+  authProvider?: string;
+  accountStatus?: string;
+}
+
+export interface RecommendationPreferences {
+  categories: string[];
+  interests: string[];
+  favoriteGenres: string[];
+  preferredBrands: string[];
+  priceRange: [number, number];
+  recommendationMode: 'accuracy' | 'diversity';
+  responseStyle: 'concise' | 'detailed';
 }
 
 export interface Item {

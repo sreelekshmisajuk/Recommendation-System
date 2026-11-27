@@ -63,7 +63,7 @@ export const SavedItems: React.FC<SavedItemsProps> = ({
             <Bookmark className="w-6 h-6" />
           </div>
           <div className="space-y-1 max-w-sm mx-auto">
-            <h3 className="text-base font-bold text-slate-900">Your wishlist is currently empty</h3>
+            <h3 className="text-base font-bold text-slate-900">No items saved yet</h3>
             <p className="text-xs text-slate-500">
               When exploring items or asking the AI assistant for recommendations, click the bookmark icon to save items for future reference.
             </p>

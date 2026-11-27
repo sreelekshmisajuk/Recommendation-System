@@ -29,6 +29,7 @@ const TAB_TITLES: Record<NavTab, { title: string; category: string }> = {
   explore: { title: 'Explore Item Catalog', category: 'Main' },
   personalized: { title: 'Personalized Recommendations', category: 'Main' },
   similar: { title: 'Semantic Similarity Discovery', category: 'Main' },
+  profile: { title: 'My User Profile', category: 'Personalization' },
   preferences: { title: 'Taste Profile & Preferences', category: 'Personalization' },
   history: { title: 'Interaction & Audit History', category: 'Personalization' },
   saved: { title: 'Saved Items & Wishlist', category: 'Personalization' },
@@ -145,6 +146,16 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="text-xs font-bold text-slate-900 truncate">{displayName}</div>
                 <div className="text-[11px] text-slate-400 truncate">{user?.email || 'member@recai.io'}</div>
               </div>
+
+              <button
+                onClick={() => {
+                  onTabChange('profile');
+                  setShowUserDropdown(false);
+                }}
+                className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              >
+                <UserIcon className="w-3.5 h-3.5 text-slate-400" /> View Profile
+              </button>
 
               <button
                 onClick={() => {
