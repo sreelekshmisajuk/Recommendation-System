@@ -101,9 +101,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-30 h-screen bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ease-in-out select-none ${
-        isCollapsed ? 'w-20' : 'w-64'
-      }`}
+      className={`fixed top-0 left-0 z-30 h-screen bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ease-in-out select-none ${isCollapsed ? 'w-20' : 'w-64'
+        }`}
     >
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-100">
@@ -152,16 +151,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
                   title={isCollapsed ? item.label : undefined}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    isActive
-                      ? 'bg-blue-50 text-blue-700 shadow-2xs font-bold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${isActive
+                    ? 'bg-blue-50 text-blue-700 shadow-2xs font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
                 >
                   <Icon
-                    className={`w-4 h-4 flex-shrink-0 transition-colors ${
-                      isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
-                    }`}
+                    className={`w-4 h-4 flex-shrink-0 transition-colors ${isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                      }`}
                   />
                   {!isCollapsed && (
                     <span className="truncate flex-1 text-left">{item.label}</span>

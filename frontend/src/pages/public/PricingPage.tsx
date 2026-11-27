@@ -12,50 +12,56 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
 
   const tiers = [
     {
-      name: 'Developer Starter',
-      desc: 'Ideal for prototyping recommendation agents and local evaluation benchmark testing.',
-      monthlyPrice: 0,
-      yearlyPrice: 0,
+      name: 'Developer Sandbox',
+      desc: 'Ideal for Indian startups, students, and engineers prototyping recommendation agents.',
+      monthlyPrice: '₹0',
+      yearlyPrice: '₹0',
+      gstNote: 'Free forever • No credit card required',
       features: [
         '10,000 Monthly RecAI API Calls',
         'Google Gemini 3.1 Flash-Lite Engine',
         'Top-K Benchmark Evaluation Harness',
-        'Standard Community Support',
-        '1 Project Workspace'
+        'Indian Developer Community Support',
+        '1 Production Workspace',
+        'Standard Rate Limiting'
       ],
-      cta: 'Start Free',
+      cta: 'Start Free in India',
       popular: false
     },
     {
-      name: 'Pro Engine',
-      desc: 'Designed for production apps requiring conversational agents and vector matching.',
-      monthlyPrice: 99,
-      yearlyPrice: 79,
+      name: 'Startup Pro Engine',
+      desc: 'Designed for fast-growing Indian D2C, media, and OTT platforms needing low latency.',
+      monthlyPrice: '₹4,999',
+      yearlyPrice: '₹3,999',
+      gstNote: '+ 18% GST applicable • UPI & RuPay accepted',
       features: [
         '500,000 Monthly RecAI API Calls',
-        'All Gemini & GPT-4o Models',
+        'Google Gemini & GPT-4o Hybrid Endpoints',
         'Prefix-Tree Constrained Decoding (RecLM-uni)',
         'Dense Embedding Vector Search (RecLM-emb)',
         'Explainable AI Attribution (RecExplainer)',
-        'Priority Technical Support'
+        'Priority Slack & WhatsApp Support (IST Hours)',
+        'Razorpay & NetBanking Invoicing'
       ],
       cta: 'Start 14-Day Free Trial',
       popular: true
     },
     {
-      name: 'Enterprise Mesh',
-      desc: 'Dedicated infrastructure, custom prefix-tree models, and private cloud deployment.',
-      monthlyPrice: 499,
-      yearlyPrice: 399,
+      name: 'Bharat Enterprise Mesh',
+      desc: 'Dedicated private VPC hosting in AWS Mumbai (ap-south-1) / GCP Delhi with Indian data compliance.',
+      monthlyPrice: '₹29,999',
+      yearlyPrice: '₹24,999',
+      gstNote: 'Custom GST invoicing • TDS compliant billing',
       features: [
         'Unlimited Monthly API Calls',
-        'Dedicated Private VPC Deployment',
-        'Custom Fine-Tuning & Offline Alignment',
-        'Zero Data Retention Guarantee',
-        'Custom SLA & 24/7 Dedicated Architect',
-        'SOC2 & HIPAA Compliance Package'
+        'Indian Cloud VPC (Mumbai / Hyderabad / Delhi)',
+        'Digital Personal Data Protection (DPDP) Act Compliant',
+        'Custom Fine-Tuning on Indian Catalogues & Languages',
+        'Dedicated Solution Architect in Bengaluru',
+        '24/7 Phone & Enterprise On-Call Support',
+        '99.95% Uptime SLA Guarantee'
       ],
-      cta: 'Contact Enterprise Sales',
+      cta: 'Contact Indian Sales Team',
       popular: false
     }
   ];
@@ -64,12 +70,14 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
     <div className="max-w-6xl mx-auto px-4 py-16 space-y-16">
       {/* Header */}
       <div className="text-center space-y-4 max-w-2xl mx-auto">
-        <span className="text-xs font-bold uppercase tracking-wider text-blue-600">Transparent Pricing</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
+          🇮🇳 Tailored for Indian Startups, D2C Brands & Enterprises
+        </div>
         <h1 className="text-4xl font-black text-slate-900 tracking-tight">
-          Flexible plans for developers and enterprise teams
+          Transparent Pricing in Indian Rupees (INR)
         </h1>
         <p className="text-xs sm:text-sm text-slate-600">
-          Scale your conversational recommendation platform with zero hidden fees. Upgrade or cancel anytime.
+          Scale your conversational recommendation platform with instant UPI, RuPay, Corporate NetBanking, and GST tax invoice receipts.
         </p>
 
         {/* Billing cycle toggle */}
@@ -88,7 +96,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
               billingCycle === 'yearly' ? 'bg-white text-slate-900 shadow-2xs' : 'text-slate-600'
             }`}
           >
-            Yearly <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">Save 20%</span>
+            Annual Billing <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">Save 20%</span>
           </button>
         </div>
       </div>
@@ -106,7 +114,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
           >
             {tier.popular && (
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] font-bold tracking-wide uppercase shadow-sm">
-                Most Popular
+                Most Popular in India
               </div>
             )}
 
@@ -116,11 +124,14 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
                 <p className="text-xs text-slate-500 mt-1">{tier.desc}</p>
               </div>
 
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black text-slate-900">
-                  ${billingCycle === 'yearly' ? tier.yearlyPrice : tier.monthlyPrice}
-                </span>
-                <span className="text-xs text-slate-400">/month</span>
+              <div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-slate-900">
+                    {billingCycle === 'yearly' ? tier.yearlyPrice : tier.monthlyPrice}
+                  </span>
+                  <span className="text-xs text-slate-400">/month</span>
+                </div>
+                <div className="text-[11px] text-slate-400 mt-1">{tier.gstNote}</div>
               </div>
 
               <div className="pt-4 border-t border-slate-100 space-y-3">
@@ -137,7 +148,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
             </div>
 
             <button
-              onClick={() => (tier.name === 'Enterprise Mesh' ? onNavigate('contact') : onOpenAuth('signup'))}
+              onClick={() => (tier.name === 'Bharat Enterprise Mesh' ? onNavigate('contact') : onOpenAuth('signup'))}
               className={`w-full py-3 rounded-xl text-xs font-bold mt-8 transition-all ${
                 tier.popular
                   ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20'
@@ -148,6 +159,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
             </button>
           </div>
         ))}
+      </div>
+
+      {/* Payment methods footer */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-center text-xs text-slate-500 space-y-2">
+        <div className="font-semibold text-slate-700">Supported Indian Payment Gateways & Rails</div>
+        <p className="text-[11px]">UPI (Google Pay, PhonePe, Paytm), RuPay Cards, Visa/Mastercard (Domestic & International), Corporate NetBanking, and NEFT/RTGS for Enterprises.</p>
       </div>
     </div>
   );
