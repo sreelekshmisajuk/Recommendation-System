@@ -451,7 +451,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
                 <span className="text-slate-500 block">Authentication Provider</span>
-                <span className="font-bold text-slate-900 mt-1 block">RecAI Token-Based Auth</span>
+                <span className="font-bold text-slate-900 mt-1 block">NexusRec Token-Based Auth</span>
               </div>
               <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
                 <span className="text-slate-500 block">Account Status</span>

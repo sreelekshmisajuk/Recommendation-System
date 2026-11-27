@@ -17,7 +17,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenAuth }) 
           Pioneering Cognitive & Explainable Conversational Recommendations
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          RecAI was founded by AI researchers and engineers dedicated to moving recommendation technology beyond black-box matrix factorization into interactive, interpretable agentic experiences.
+          NexusRec was founded by AI researchers and engineers dedicated to moving recommendation technology beyond black-box matrix factorization into interactive, interpretable agentic experiences.
         </p>
       </div>
 

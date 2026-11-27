@@ -223,7 +223,7 @@ export const Overview: React.FC<OverviewProps> = ({
             onClick={() => loadDashboardData(true)}
             disabled={isRefreshing}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all disabled:opacity-50"
-            title="Fetch latest telemetry from RecAI backend"
+            title="Fetch latest telemetry from NexusRec backend"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
             <span>{isRefreshing ? 'Updating...' : 'Refresh'}</span>
@@ -356,7 +356,7 @@ export const Overview: React.FC<OverviewProps> = ({
                 <span className="text-xs font-bold text-slate-900">Model Evaluation</span>
                 {getStatusBadge(health?.services.evaluationService.status || 'Operational')}
               </div>
-              <p className="text-xs font-medium text-slate-700">RecAI Evaluation Suite</p>
+              <p className="text-xs font-medium text-slate-700">NexusRec Evaluation Suite</p>
               <p className="text-[11px] text-slate-500 mt-0.5">
                 NDCG, HitRate, MRR benchmarks
               </p>
@@ -643,7 +643,7 @@ export const Overview: React.FC<OverviewProps> = ({
         <div>
           <h2 className="text-base font-bold text-[#172033]">Recommendation Engine Capabilities</h2>
           <p className="text-xs text-[#64748B] mt-0.5">
-            Architectural modules implemented and accessible in this RecAI deployment.
+            Architectural modules implemented and accessible in this NexusRec deployment.
           </p>
         </div>
 

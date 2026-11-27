@@ -66,7 +66,7 @@ export const PublicFooter: React.FC<PublicFooterProps> = ({ onNavigate }) => {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-          <p>© 2026 RecAI Technologies Inc. All rights reserved.</p>
+          <p>© 2026 NexusRec Technologies Inc. All rights reserved.</p>
           <div className="flex gap-4">
             <button onClick={() => onNavigate('privacy')} className="hover:underline">Privacy</button>
             <button onClick={() => onNavigate('terms')} className="hover:underline">Terms</button>

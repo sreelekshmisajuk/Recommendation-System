@@ -24,16 +24,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAuth }) =>
 
   const faqs = [
     {
-      q: 'How does RecAI differ from traditional recommender systems?',
-      a: 'Traditional recommender systems rely purely on matrix factorization and click logs. RecAI integrates conversational Large Language Models (LLMs) with constrained prefix-tree decoding, dense vector embeddings (RecLM-emb), and surrogate explainability (RecExplainer), giving users conversational agency without hallucinated items.'
+      q: 'How does NexusRec differ from traditional recommender systems?',
+      a: 'Traditional recommender systems rely purely on matrix factorization and click logs. NexusRec integrates conversational Large Language Models (LLMs) with constrained prefix-tree decoding, dense vector embeddings (RecLM-emb), and surrogate explainability (RecExplainer), giving users conversational agency without hallucinated items.'
     },
     {
-      q: 'Which LLMs can be used with RecAI?',
-      a: 'RecAI features seamless support for Google Gemini (including gemini-3.1-flash-lite, gemini-3.8-flash), OpenAI GPT-4o, Anthropic Claude 3.5, and open-weight Hugging Face models via OpenAI-compatible endpoints.'
+      q: 'Which LLMs can be used with NexusRec?',
+      a: 'NexusRec features seamless support for Google Gemini (including gemini-3.1-flash-lite, gemini-3.8-flash), OpenAI GPT-4o, Anthropic Claude 3.5, and open-weight Hugging Face models via OpenAI-compatible endpoints.'
     },
     {
       q: 'Can I integrate my own custom product catalog?',
-      a: 'Yes! RecAI supports CSV, JSONL, and direct SQL database ingestion. You can run offline evaluation suites across standard benchmarks like MovieLens, Steam, or your proprietary telemetry.'
+      a: 'Yes! NexusRec supports CSV, JSONL, and direct SQL database ingestion. You can run offline evaluation suites across standard benchmarks like MovieLens, Steam, or your proprietary telemetry.'
     },
     {
       q: 'Is there enterprise support and private cloud deployment?',
@@ -127,7 +127,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAuth }) =>
         <div className="max-w-6xl mx-auto px-4 space-y-10">
           <div className="text-center space-y-2">
             <h2 className="text-2xl font-bold text-slate-900">Trusted by modern media & e-commerce teams</h2>
-            <p className="text-xs text-slate-500">Leading companies deploy RecAI to replace static collaborative filtering.</p>
+            <p className="text-xs text-slate-500">Leading companies deploy NexusRec to replace static collaborative filtering.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -136,7 +136,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAuth }) =>
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400" />)}
               </div>
               <p className="text-xs text-slate-600 italic leading-relaxed">
-                "RecAI increased our catalog session duration by 42%. Users love the conversational recommendations backed by clear explanations."
+                "NexusRec increased our catalog session duration by 42%. Users love the conversational recommendations backed by clear explanations."
               </p>
               <div>
                 <div className="font-bold text-xs text-slate-900">David M.</div>
@@ -177,7 +177,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAuth }) =>
       <section className="max-w-3xl mx-auto px-4 space-y-6">
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-bold text-slate-900">Frequently Asked Questions</h2>
-          <p className="text-xs text-slate-500">Everything you need to know about RecAI architecture and deployment.</p>
+          <p className="text-xs text-slate-500">Everything you need to know about NexusRec architecture and deployment.</p>
         </div>
 
         <div className="space-y-3">

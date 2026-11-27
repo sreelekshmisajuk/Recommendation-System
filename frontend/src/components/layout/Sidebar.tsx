@@ -105,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {!isCollapsed && (
             <div className="flex flex-col min-w-0">
               <span className="text-base font-extrabold tracking-tight text-slate-900 truncate flex items-center gap-1.5">
-                Rec<span className="text-blue-600">AI</span>
+                Nexus<span className="text-blue-600">Rec</span>
                 <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                   2.4
                 </span>
@@ -174,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="absolute bottom-full left-3 right-3 mb-2 bg-white rounded-2xl border border-slate-200 shadow-xl p-3 z-50 animate-in fade-in slide-in-from-bottom-2 space-y-2">
             <div className="px-2 py-1.5 border-b border-slate-100">
               <div className="text-xs font-bold text-slate-900 truncate">{displayName}</div>
-              <div className="text-[11px] text-slate-400 truncate">{user?.email || 'member@recai.io'}</div>
+              <div className="text-[11px] text-slate-400 truncate">{user?.email || 'member@nexusrec.io'}</div>
               <div className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 {user?.plan || 'Pro Tier'} Active

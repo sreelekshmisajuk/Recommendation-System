@@ -1,5 +1,5 @@
 /**
- * Centralized API Client Layer for RecAI Frontend
+ * Centralized API Client Layer for NexusRec Frontend
  * Configurable via VITE_API_BASE_URL, with seamless fallback to simulated local enterprise backend engine.
  */
 

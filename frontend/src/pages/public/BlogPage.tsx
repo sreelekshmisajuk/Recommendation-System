@@ -15,7 +15,7 @@ export const BlogPage: React.FC<BlogPageProps> = () => {
       category: 'Research • Bengaluru Lab',
       date: 'November 24, 2026',
       readTime: '6 min read',
-      institution: 'RecAI Research Bengaluru'
+      institution: 'NexusRec Research Bengaluru'
     },
     {
       id: 'post-2',
@@ -24,7 +24,7 @@ export const BlogPage: React.FC<BlogPageProps> = () => {
       category: 'Engineering • Hyderabad Hub',
       date: 'November 18, 2026',
       readTime: '8 min read',
-      institution: 'RecAI Labs India'
+      institution: 'NexusRec Labs India'
     },
     {
       id: 'post-3',
@@ -43,7 +43,7 @@ export const BlogPage: React.FC<BlogPageProps> = () => {
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
           🇮🇳 Indian AI Research & Whitepapers
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900">RecAI India Engineering Blog</h1>
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900">NexusRec India Engineering Blog</h1>
         <p className="text-xs text-slate-500">
           Technical deep-dives, benchmark reports from our Bengaluru AI lab, and system design papers tailored for the Indian digital ecosystem.
         </p>

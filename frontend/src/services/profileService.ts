@@ -7,11 +7,11 @@
 import { UserProfile, RecommendationPreferences } from '../types';
 import { request } from './api';
 
-const TOKEN_KEY = 'recai_auth_token';
+const TOKEN_KEY = 'nexusrec_auth_token';
 
 export const profileService = {
   getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY) || localStorage.getItem('recai_auth_token');
   },
 
   setToken(token: string): void {
@@ -20,6 +20,7 @@ export const profileService = {
 
   clearToken(): void {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('recai_auth_token');
   },
 
   getAuthHeaders(): Record<string, string> {

@@ -65,10 +65,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         <footer className="border-t border-slate-200 bg-white/70 backdrop-blur-sm py-4 px-6 md:px-8 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>RecAI Engine 2.4-lite • Gemini LLM Hybrid Recommendation Mesh</span>
+            <span>NexusRec Engine 2.4-lite • Gemini LLM Hybrid Recommendation Mesh</span>
           </div>
           <div>
-            <span>© 2026 RecAI Technologies Inc. • Enterprise Multi-agent CRS Platform</span>
+            <span>© 2026 NexusRec Technologies Inc. • Enterprise Multi-agent CRS Platform</span>
           </div>
         </footer>
       </div>

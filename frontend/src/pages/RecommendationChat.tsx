@@ -37,7 +37,7 @@ export const RecommendationChat: React.FC<RecommendationChatProps> = ({
     {
       id: 'welcome-msg',
       sender: 'assistant',
-      text: "Hello! I am **RecAI Recommender Assistant** (powered by InteRecAgent & Gemini).\n\nTell me about your favorite genres, games, movies, or gear, and I will generate personalized recommendations backed by collaborative filtering and surrogate model explanations.",
+      text: "Hello! I am **NexusRec Recommender Assistant** (powered by InteRecAgent & Gemini).\n\nTell me about your favorite genres, games, movies, or gear, and I will generate personalized recommendations backed by collaborative filtering and surrogate model explanations.",
       timestamp: 'Just now',
       followUpQuestions: [
         'Recommend games based on my previous interests',

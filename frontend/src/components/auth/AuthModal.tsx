@@ -94,7 +94,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       if (res.ok) {
         const payload = await res.json();
         if (payload.token) {
-          localStorage.setItem('recai_auth_token', payload.token);
+          localStorage.setItem('nexusrec_auth_token', payload.token);
         }
         setIsLoading(false);
         onSuccess(payload.user);
@@ -109,11 +109,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setIsLoading(false);
       onSuccess({
         name: name || (email.split('@')[0] ? email.split('@')[0].toUpperCase() : 'Workspace User'),
-        email: email || 'user@recai.io',
+        email: email || 'user@nexusrec.io',
         role: 'AI Engineer',
         plan: 'Pro Tier',
         createdAt: 'November 27, 2026',
-        authProvider: 'RecAI Native Auth',
+        authProvider: 'NexusRec Native Auth',
         accountStatus: 'Active'
       });
       onClose();
@@ -138,7 +138,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
           <h3 className="text-xl font-bold text-slate-900">
             {mode === 'login' && 'Welcome Back'}
-            {mode === 'signup' && 'Create Your RecAI Account'}
+            {mode === 'signup' && 'Create Your NexusRec Account'}
             {mode === 'forgot' && 'Reset Password'}
           </h3>
           <p className="text-xs text-slate-500">

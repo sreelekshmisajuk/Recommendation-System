@@ -21,7 +21,7 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
           🇮🇳 India HQ & Research Lab
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900">Connect with RecAI India Team</h1>
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900">Connect with NexusRec India Team</h1>
         <p className="text-xs text-slate-500">
           Have queries about Indian cloud data residency, catalog ingestion, or enterprise DPDP Act compliance? Our Bengaluru and Hyderabad engineering teams are here to assist.
         </p>
@@ -88,7 +88,7 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
               </div>
               <h3 className="text-lg font-bold text-slate-900">धन्यवाद! Message Received!</h3>
               <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                Thank you for reaching out to RecAI India. Our solution architects from Bengaluru will get in touch with you shortly.
+                Thank you for reaching out to NexusRec India. Our solution architects from Bengaluru will get in touch with you shortly.
               </p>
               <button
                 onClick={() => setSubmitted(false)}

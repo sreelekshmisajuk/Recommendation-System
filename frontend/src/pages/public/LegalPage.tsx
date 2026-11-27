@@ -26,7 +26,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ page }) => {
             <section className="space-y-2">
               <h3 className="text-sm font-bold text-slate-900">1. Information We Collect</h3>
               <p>
-                RecAI collects account metadata, API telemetry logs, and recommendation query inputs strictly to provide, optimize, and secure conversational recommendation workloads. We do NOT sell user interaction logs to third parties.
+                NexusRec collects account metadata, API telemetry logs, and recommendation query inputs strictly to provide, optimize, and secure conversational recommendation workloads. We do NOT sell user interaction logs to third parties.
               </p>
             </section>
             <section className="space-y-2">
@@ -49,19 +49,19 @@ export const LegalPage: React.FC<LegalPageProps> = ({ page }) => {
             <section className="space-y-2">
               <h3 className="text-sm font-bold text-slate-900">1. Acceptance of Terms</h3>
               <p>
-                By creating an account or accessing the RecAI platform and API, you agree to comply with these Terms of Service and all applicable data privacy regulations.
+                By creating an account or accessing the NexusRec platform and API, you agree to comply with these Terms of Service and all applicable data privacy regulations.
               </p>
             </section>
             <section className="space-y-2">
               <h3 className="text-sm font-bold text-slate-900">2. API Usage & Rate Limits</h3>
               <p>
-                Accounts are assigned specific tier quotas. Attempting to bypass rate limiting or conduct automated denial of service against RecAI infrastructure is strictly prohibited.
+                Accounts are assigned specific tier quotas. Attempting to bypass rate limiting or conduct automated denial of service against NexusRec infrastructure is strictly prohibited.
               </p>
             </section>
             <section className="space-y-2">
               <h3 className="text-sm font-bold text-slate-900">3. Intellectual Property</h3>
               <p>
-                All algorithmic models, trademarks, prefix-tree indexing methods, and proprietary surrogate architectures remain the intellectual property of RecAI Technologies Inc.
+                All algorithmic models, trademarks, prefix-tree indexing methods, and proprietary surrogate architectures remain the intellectual property of NexusRec Technologies Inc.
               </p>
             </section>
           </>

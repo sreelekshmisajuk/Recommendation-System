@@ -36,7 +36,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
           </div>
           <div className="flex flex-col">
             <span className="text-lg font-black tracking-tight text-slate-900 flex items-center gap-1">
-              Rec<span className="text-blue-600">AI</span>
+              Nexus<span className="text-blue-600">Rec</span>
               <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                 SaaS
               </span>

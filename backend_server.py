@@ -1,5 +1,5 @@
 """
-RecAI Enterprise Backend Server
+NexusRec Enterprise Backend Server
 Connects the React frontend directly with Google Gemini LLM and authenticates actual user sessions.
 Features real token-based user accounts, profile persistence, preferences, item catalog APIs, LLM reasoning,
 live telemetry tracking, actual system health probing, and authoritative dashboard analytics.
@@ -152,7 +152,7 @@ def log_system_event(level: str, message: str, service: str):
         SYSTEM_EVENTS.pop()
 
 # Log initial boot event
-log_system_event("info", "RecAI backend server initialized and listening", "Server Core")
+log_system_event("info", "NexusRec backend server initialized and listening", "Server Core")
 if client:
     log_system_event("success", "Connected to Gemini API (gemini-3.1-flash-lite)", "LLM Provider")
 else:
@@ -187,7 +187,7 @@ def call_gemini(prompt: str, system_prompt: str, preferred_model="gemini-3.1-fla
     raise last_err
 
 # 2. HTTP Request Handler
-class RecAIRequestHandler(BaseHTTPRequestHandler):
+class NexusRecRequestHandler(BaseHTTPRequestHandler):
     def _set_headers(self, status=200, content_type="application/json"):
         self.send_response(status)
         self.send_header("Content-Type", content_type)
@@ -223,7 +223,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
             self._set_headers(200)
             health_data = {
                 "status": "online",
-                "backend": "RecAI Python Engine",
+                "backend": "NexusRec Python Engine",
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "uptimeSeconds": int(time.time() - SERVER_START_TIME),
                 "services": {
@@ -260,7 +260,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                         "registeredUsers": len(USERS_DB)
                     },
                     "evaluationService": {
-                        "name": "RecAI Evaluation Suite",
+                        "name": "NexusRec Evaluation Suite",
                         "status": "Operational" if os.path.exists("07_Evaluation_Suite/eval.py") else "Not Configured",
                         "description": "Top-K ranking benchmark metrics"
                     }
@@ -338,7 +338,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                     "plan": user.get("plan", "Developer Free"),
                     "avatar": user.get("avatar", ""),
                     "createdAt": user.get("createdAt", "Just now"),
-                    "authProvider": user.get("authProvider", "RecAI Native Auth"),
+                    "authProvider": user.get("authProvider", "NexusRec Native Auth"),
                     "accountStatus": "Active"
                 }
             }).encode("utf-8"))
@@ -407,7 +407,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                 "plan": "Pro Tier",
                 "avatar": "",
                 "createdAt": time.strftime("%B %d, %Y"),
-                "authProvider": "RecAI Secure Auth",
+                "authProvider": "NexusRec Secure Auth",
                 "preferences": {
                     "categories": [],
                     "interests": [],
@@ -441,7 +441,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                 user_id = f"user_{uuid.uuid4().hex[:8]}"
                 target_user = {
                     "id": user_id,
-                    "email": email or "user@recai.io",
+                    "email": email or "user@nexusrec.io",
                     "password": password or "Password123!",
                     "name": email.split("@")[0].capitalize() if email else "Workspace Member",
                     "username": email.split("@")[0] if email else "member",
@@ -449,7 +449,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                     "plan": "Pro Tier",
                     "avatar": "",
                     "createdAt": time.strftime("%B %d, %Y"),
-                    "authProvider": "RecAI Direct Auth",
+                    "authProvider": "NexusRec Direct Auth",
                     "preferences": {
                         "categories": [],
                         "interests": [],
@@ -462,7 +462,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
                 }
                 USERS_DB[user_id] = target_user
 
-            token = f"recai_tok_{uuid.uuid4().hex}"
+            token = f"nexusrec_tok_{uuid.uuid4().hex}"
             SESSIONS_DB[token] = target_user["id"]
             log_system_event("info", f"User logged in: {target_user['email']}", "Auth System")
 
@@ -611,10 +611,10 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
         style = payload.get("style", "detailed")
 
         user, _ = self.get_auth_user()
-        user_email = user["email"] if user else (payload.get("userEmail") or "guest@recai.io")
+        user_email = user["email"] if user else (payload.get("userEmail") or "guest@nexusrec.io")
 
         system_prompt = (
-            f"You are RecAI, an intelligent conversational recommendation assistant. "
+            f"You are NexusRec, an intelligent conversational recommendation assistant. "
             f"Mode: {mode.upper()} (balance precision and domain variety accordingly). "
             f"Style: {style.upper()} ({'be succinct and focused' if style == 'concise' else 'give rich, informative insights'}). "
             f"Recommend top items, provide concrete reasoning for each, and provide 2-3 follow-up prompt suggestions."
@@ -624,7 +624,7 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
             if client:
                 llm_text, model_used = call_gemini(user_message, system_prompt, preferred_model="gemini-3.1-flash-lite")
             else:
-                llm_text = f"RecAI Engine: Recommended choices for '{user_message}' with {mode} mode active."
+                llm_text = f"NexusRec Engine: Recommended choices for '{user_message}' with {mode} mode active."
                 model_used = "local-heuristic"
 
             latency_ms = int((time.time() - start_time) * 1000)
@@ -723,9 +723,9 @@ class RecAIRequestHandler(BaseHTTPRequestHandler):
 
 def run_server(port=8000):
     server_address = ("127.0.0.1", port)
-    httpd = HTTPServer(server_address, RecAIRequestHandler)
+    httpd = HTTPServer(server_address, NexusRecRequestHandler)
     print(f"\n=======================================================")
-    print(f"🚀 RecAI Backend Server Running on http://127.0.0.1:{port}")
+    print(f"🚀 NexusRec Backend Server Running on http://127.0.0.1:{port}")
     print(f"[*] Health Check: http://127.0.0.1:{port}/health")
     print(f"[*] Dashboard Telemetry API: http://127.0.0.1:{port}/api/dashboard/summary")
     print(f"[*] User Auth & Profile APIs: /api/users/me, /api/auth/login")
@@ -734,7 +734,7 @@ def run_server(port=8000):
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nStopping RecAI Backend Server...")
+        print("\nStopping NexusRec Backend Server...")
         httpd.server_close()
 
 if __name__ == "__main__":

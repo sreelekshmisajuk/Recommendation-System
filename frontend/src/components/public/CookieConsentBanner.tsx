@@ -10,14 +10,14 @@ export const CookieConsentBanner: React.FC<CookieConsentBannerProps> = ({ onNavi
   const [accepted, setAccepted] = useState(true);
 
   useEffect(() => {
-    const hasConsented = localStorage.getItem('recai_cookie_consent');
+    const hasConsented = localStorage.getItem('nexusrec_cookie_consent');
     if (!hasConsented) {
       setAccepted(false);
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('recai_cookie_consent', 'true');
+    localStorage.setItem('nexusrec_cookie_consent', 'true');
     setAccepted(true);
   };
 

@@ -13,7 +13,7 @@ export const chatService = {
   ): Promise<ChatMessage> {
     const startTime = performance.now();
 
-    // 1. Send query to RecAI Python Backend (Gemini-connected)
+    // 1. Send query to NexusRec Python Backend (Gemini-connected)
     try {
       const backendRes = await request<any>('/chat', {
         method: 'POST',

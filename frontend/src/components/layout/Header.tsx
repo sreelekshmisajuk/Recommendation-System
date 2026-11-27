@@ -53,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
 
-  const currentMeta = TAB_TITLES[activeTab] || { title: 'Workspace', category: 'RecAI' };
+  const currentMeta = TAB_TITLES[activeTab] || { title: 'Workspace', category: 'NexusRec' };
   const displayName = user?.name || 'Workspace Member';
   const initial = displayName.charAt(0).toUpperCase();
 
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl border border-slate-200 shadow-xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150 space-y-1">
               <div className="px-3 py-2 border-b border-slate-100">
                 <div className="text-xs font-bold text-slate-900 truncate">{displayName}</div>
-                <div className="text-[11px] text-slate-400 truncate">{user?.email || 'member@recai.io'}</div>
+                <div className="text-[11px] text-slate-400 truncate">{user?.email || 'member@nexusrec.io'}</div>
               </div>
 
               <button
@@ -198,11 +198,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-slate-900">About RecAI Enterprise Platform</h3>
+              <h3 className="text-base font-bold text-slate-900">About NexusRec Enterprise Platform</h3>
               <button onClick={() => setShowHelpModal(false)} className="text-xs text-slate-400 hover:text-slate-700">Close</button>
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              RecAI combines Large Language Models (LLMs) with traditional collaborative filtering, dense retrieval, and surrogate explainability models.
+              NexusRec combines Large Language Models (LLMs) with traditional collaborative filtering, dense retrieval, and surrogate explainability models.
             </p>
             <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-1.5 text-slate-700">
               <div className="font-semibold text-slate-900">Core Sub-systems:</div>

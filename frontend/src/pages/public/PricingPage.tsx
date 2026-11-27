@@ -18,7 +18,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
       yearlyPrice: '₹0',
       gstNote: 'Free forever • No credit card required',
       features: [
-        '10,000 Monthly RecAI API Calls',
+        '10,000 Monthly NexusRec API Calls',
         'Google Gemini 3.1 Flash-Lite Engine',
         'Top-K Benchmark Evaluation Harness',
         'Indian Developer Community Support',
@@ -35,7 +35,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenAuth
       yearlyPrice: '₹3,999',
       gstNote: '+ 18% GST applicable • UPI & RuPay accepted',
       features: [
-        '500,000 Monthly RecAI API Calls',
+        '500,000 Monthly NexusRec API Calls',
         'Google Gemini & GPT-4o Hybrid Endpoints',
         'Prefix-Tree Constrained Decoding (RecLM-uni)',
         'Dense Embedding Vector Search (RecLM-emb)',
